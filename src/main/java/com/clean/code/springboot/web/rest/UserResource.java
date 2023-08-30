@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.regex.Pattern;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserResource {
     private final UserService userService;
 
@@ -22,10 +22,15 @@ public class UserResource {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody User user){
+        System.out.println(user);
         if(!isPasswordValid(user.getHashedPassword())){
             return new ResponseEntity("Password is not complicated", HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok("User register successfully");
+
+        if (userService.checkUserName(user.getUserName())){
+            return new ResponseEntity("This username already exists", HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(this.userService.create(user));
     }
 
     public static boolean isPasswordValid(String password) {

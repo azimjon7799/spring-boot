@@ -17,8 +17,10 @@ public class SecurityConfiguration {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
+                                .requestMatchers("/api/user/register").permitAll()
                                 .anyRequest().authenticated()
                 )
+
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
@@ -40,5 +42,10 @@ public class SecurityConfiguration {
 
         return new InMemoryUserDetailsManager(user, admin);
     }
+
+//    @Bean
+//    public PasswordEncoder passwordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
 
 }

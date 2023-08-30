@@ -42,4 +42,5 @@ public class SwaggerConfiguration {
                     .description("Java, Spring-boot, Spring-security, Jpa, Postgres, Swagger")
         );
     }
+
 }
